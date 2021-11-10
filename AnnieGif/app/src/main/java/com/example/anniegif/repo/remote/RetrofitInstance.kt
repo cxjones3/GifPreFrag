@@ -1,6 +1,5 @@
 package com.example.anniegif.repo.remote
 
-import com.squareup.moshi.Moshi
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
