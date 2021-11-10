@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">AnnieGif</string>
+    <string name="api_key">8675309</string>
+    <string name="type">hug</string>
+    <string-array name="gif_types">
+        <item>  baka</item>
+        <item>  bite</item>
+        <item>  blush</item>
+        <item>  bored</item>
+        <item>  cry</item>
+        <item>  cuddle</item>
+        <item>  dance</item>
+        <item>  facepalm</item>
+        <item>  feed</item>
+        <item>  happy</item>
+        <item>  highfive</item>
+        <item>  hug</item>
+        <item>  kiss</item>
+        <item>  laugh</item>
+        <item>  pat</item>
+        <item>  poke</item>
+        <item>  pout</item>
+        <item>  shrug</item>
+        <item>  slap</item>
+        <item>  sleep</item>
+        <item>  smile</item>
+        <item>  smug</item>
+        <item>  stare</item>
+        <item>  think</item>
+        <item>  thumbsup</item>
+        <item>  tickle</item>
+        <item>  wave</item>
+        <item>wink</item>
+    </string-array>
+</resources>
