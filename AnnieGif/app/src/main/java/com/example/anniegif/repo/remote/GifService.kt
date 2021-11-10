@@ -1,20 +1,15 @@
 package com.example.anniegif.repo.remote
 
-import com.example.anniegif.R
-import com.example.anniegif.model.Global
-import com.example.anniegif.model.neko
-import retrofit2.Call
-import retrofit2.Response
-import retrofit2.http.*
+import com.example.anniegif.model.Nekos
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface GifService {
+
     @GET("api/v1/{endpoint}")
-    suspend fun getGifs(@Path("endpoint") endpoint: String, @Query("amount") amount : Int): Response<neko>
-
-
-
-    /*@GET("api/v1/")
     suspend fun getGifs(
-        @Query("amount") amount : Int?
-        ): Response<neko>*/
+        @Path("endpoint") endpoint: String, @Query("amount") amount: Int
+    ): Nekos
+
 }

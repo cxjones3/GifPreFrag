@@ -1,64 +1,46 @@
 package com.example.anniegif.view
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import android.view.View
-import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.anniegif.R
 import com.example.anniegif.adapter.GifAdapter
 import com.example.anniegif.databinding.ActivityMainBinding
-import com.example.anniegif.databinding.ItemImageBinding
-import com.example.anniegif.model.Global
+import com.example.anniegif.model.Neko
+import com.example.anniegif.utils.BundleKey
+import com.example.anniegif.utils.openActivity
 import com.example.anniegif.viewmodel.GifViewModel
 
 class AnnieGifListActivity : AppCompatActivity() {
-
-    private val binding2 by lazy{ItemImageBinding.inflate(layoutInflater)}
-    private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<GifViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        Log.d("AnnieActivity", "before")
-        binding.rvImages.adapter = GifAdapter()
+        initViews()
 
-        val type = getIntent().getStringExtra("giftype")
-        Log.d("AnnieActivity", type.toString())
+        val type = intent.extras?.getString(BundleKey.TYPE)
 
-        viewModel.getImages(type.toString(), 20)
-
-
-
-        viewModel.gifs.observe(this) {
-            // Here is where your will get the result
-            Log.d("AnnieActivity", "onCreate: $it")
-           // (findViewById<RecyclerView>(R.id.rv_images).adapter as GifAdapter).updateUrls(it)
-            (binding.rvImages.adapter as GifAdapter).updateUrls(it)
-            (binding.rvImages.layoutManager as GridLayoutManager).spanCount = 2
-
+        if (type != null) {
+            viewModel.getImages(type, 20)
+            viewModel.gifs.observe(this) {
+                // Here is where your will get the result
+                Log.d("AnnieActivity", "onCreate: $it")
+                (binding.rvImages.adapter as GifAdapter).updateUrls(it)
+            }
+        } else Toast.makeText(this, "No Type Selected", Toast.LENGTH_SHORT).show().also {
+            finish()
         }
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun goFull(view: View) {
-        val url = binding2.ivImage.getTooltipText().toString()
-        Global.imageD = binding2.ivImage.drawable
-        //binding2.ivImage.imageURI
-        val intent = Intent(this,FullScreenGifActivity::class.java)
-        intent.putExtra("fullscreen",url)
-        startActivity(intent)
-        Log.d("Annie",url.toString())
+    private fun initViews() = with(binding) {
+        rvImages.adapter = GifAdapter(::goFull)
     }
 
-
+    fun goFull(neko: Neko) {
+        openActivity(FullScreenGifActivity::class.java) { putString(BundleKey.URL, neko.url) }
+    }
 }
